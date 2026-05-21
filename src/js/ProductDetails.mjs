@@ -16,11 +16,66 @@ export default class ProductDetails {
       .addEventListener("click", this.addProductToCart.bind(this));
   }
 
-  addProductToCart() {
-    const cartItems = getLocalStorage("so-cart") || [];
-    cartItems.push(this.product);
-    setLocalStorage("so-cart", cartItems);
+ /* addProductToCart() {
+  const cartItems = getLocalStorage("so-cart") || [];
+
+  let existingItem = null;
+
+  cartItems.forEach(item => {
+    if (this.productId === item.product.Id) {
+      existingItem = item;
+      existingItem.quantity += 1;
+       //console.log("product.Id =", item.product.Id)
+      cartItems.push({
+      product: this.product,
+      quantity: existingItem.quantity, 
+      })
+  } else {
+    cartItems.push({
+      product: this.product,
+      quantity: 1
+    })}
   }
+  )
+  setLocalStorage("so-cart", cartItems);
+ 
+}*/
+addProductToCart() {
+  const cartItems = getLocalStorage("so-cart") || [];
+
+  let existingItem = null;
+
+  cartItems.forEach(item => {
+    if (this.productId === item.product.Id) {
+      existingItem = item;
+       console.log("cartItems =", cartItems)
+    }
+  });
+
+  if (existingItem) {
+    existingItem.quantity += 1;
+    
+  } else {
+    cartItems.push({
+      product: this.product,
+      quantity: 1
+    });
+  }
+
+  setLocalStorage("so-cart", cartItems);
+}
+
+ 
+    
+     //const cartItems = getLocalStorage("so-cart") || [];
+    //cartItems.push(this.product);
+    //setLocalStorage("so-cart", cartItems);
+    
+   
+      
+
+    
+
 
   renderProductDetails() {
     const container = document.querySelector(".product-detail");
@@ -32,7 +87,7 @@ export default class ProductDetails {
       <h3>${this.product.Brand.Name}</h3>
       <h2 class="divider">${this.product.NameWithoutBrand}</h2>
 
-      <img class="divider" src="${this.product.Image}" alt="${this.product.NameWithoutBrand}" />
+      <img class="divider" src="${this.product.Images.PrimaryLarge}" alt="${this.product.NameWithoutBrand}" />
 
       <p class="product-card__price"><span class="final-price">$${this.product.FinalPrice}</span></p>
 
