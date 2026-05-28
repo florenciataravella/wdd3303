@@ -56,7 +56,9 @@ addProductToCart() {
     const discount = Math.round (
       (1 - this.product.FinalPrice / this.product.SuggestedRetailPrice) * 100 
     );
-
+    
+    
+    //const image = product.Images?.PrimaryMedium || product.Image;
     container.innerHTML = `
       <h3>${this.product.Brand.Name}</h3>
       <h2 class="divider">${this.product.NameWithoutBrand}</h2>
@@ -72,11 +74,30 @@ addProductToCart() {
       <p class="product__color">${this.product.Colors[0].ColorName}</p>
 
       <p class="product__description">${this.product.DescriptionHtmlSimple}</p>
-
+      <div id = "commentsDiv"></div>
+      
+      <label for = "comments"> Comments </label>
+      <textarea
+          id = "comments"
+          name = "comments"
+          rows = "5"
+          cols = "30"
+      ></textarea>
       <div class="product-detail__add">
         <button id="addToCart" data-id="${this.product.Id}">Add to Cart</button>
       </div>
     `;
+    const commentsdiv = document.getElementById("commentsDiv");
+    //commentsdiv.innerHTML = "";
+    const textArea = document.getElementById ("comments");
+    
+   textArea.addEventListener("change", () =>{
+    if(textArea.value.trim()){
+      commentsdiv.innerHTML +=
+      `<p> ${textArea.value}</p> `;
+    }
+    textArea.value = "";
+   })
   }
   
 }
