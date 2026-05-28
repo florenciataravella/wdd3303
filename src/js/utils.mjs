@@ -57,3 +57,11 @@ export async function loadHeaderFooter(){
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
 }
+
+export function modalHandler(){
+  const dialog = document.getElementById("myDialog");
+  dialog.showModal();
+  document.getElementById("closeBtn").addEventListener("click",()=> {
+        dialog.close();
+  })
+}

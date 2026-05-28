@@ -1,26 +1,37 @@
 import { getLocalStorage } from "./utils.mjs";
+import { loadHeaderFooter} from "./utils.mjs";
+
+loadHeaderFooter();
+
+/*window.addEventListener("beforeunload", () => {
+  localStorage.removeItem("so-cart");
+});*/
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
+ 
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".cart-list").innerHTML = htmlItems.join("");
 }
 
 function cartItemTemplate(item) {
+   const product = item.product || item;
+   const quantity = item.quantity || 1;  
+   const image = product.Images?.PrimaryMedium || product.Image; 
   const newItem = `<li class="cart-card divider">
-  <span class="cart-remove" data-id="${item.product.Id}">✕</span>
+  <span class="cart-remove" data-id="${product.Id}">✕</span>
   <a href="#" class="cart-card__image">
     <img
-      src="${item.product.Images.PrimaryMedium}"
-      alt="${item.product.Name}"
+      src="${image}"
+      alt="${product.Name}"
     />
   </a>
   <a href="#">
-    <h2 class="card__name">${item.product.Name}</h2>
+    <h2 class="card__name">${product.Name}</h2>
   </a>
-  <p class="cart-card__color">${item.product.Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">qty: ${item.quantity}</p>
-  <p class="cart-card__price">$${item.product.FinalPrice}</p>
+  <p class="cart-card__color">${product.Colors[0].ColorName}</p>
+  <p class="cart-card__quantity">qty: ${quantity || 0 }</p>
+  <p class="cart-card__price">$${product.FinalPrice}</p>
 </li>`;
 
   return newItem;
@@ -42,3 +53,8 @@ function removeFromCart(id) {
 
   renderCartContents(); // Re-render the cart contents
 }
+const checkoutBtn = document.getElementById("checkout");
+checkoutBtn.addEventListener("click", ()=>{
+  window.location.href = "/checkout/index.html"
+})
+

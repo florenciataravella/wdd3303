@@ -16,39 +16,18 @@ export default class ProductDetails {
       .addEventListener("click", this.addProductToCart.bind(this));
   }
 
- /* addProductToCart() {
-  const cartItems = getLocalStorage("so-cart") || [];
 
-  let existingItem = null;
-
-  cartItems.forEach(item => {
-    if (this.productId === item.product.Id) {
-      existingItem = item;
-      existingItem.quantity += 1;
-       //console.log("product.Id =", item.product.Id)
-      cartItems.push({
-      product: this.product,
-      quantity: existingItem.quantity, 
-      })
-  } else {
-    cartItems.push({
-      product: this.product,
-      quantity: 1
-    })}
-  }
-  )
-  setLocalStorage("so-cart", cartItems);
- 
-}*/
 addProductToCart() {
+  
   const cartItems = getLocalStorage("so-cart") || [];
-
+  //localStorage.removeItem("so-cart");
   let existingItem = null;
 
   cartItems.forEach(item => {
+    console.log("item:", item);
     if (this.productId === item.product.Id) {
       existingItem = item;
-       console.log("cartItems =", cartItems)
+       
     }
   });
 
@@ -64,18 +43,13 @@ addProductToCart() {
 
   setLocalStorage("so-cart", cartItems);
 }
-
- 
+/*
+ addProductToCart() {
     
-     //const cartItems = getLocalStorage("so-cart") || [];
-    //cartItems.push(this.product);
-    //setLocalStorage("so-cart", cartItems);
-    
-   
-      
-
-    
-
+    const cartItems = getLocalStorage("so-cart") || [];
+    cartItems.push(this.product);
+    setLocalStorage("so-cart", cartItems);
+ }*/
 
   renderProductDetails() {
     const container = document.querySelector(".product-detail");
